@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
+import Table from '../../components/Table/Table';
 
 interface Deck {
   name: string;
   description?: string;
+  content: { [key: string]: { text: string } }[];
+  createdDate?: string;
 }
 
 const DeckDetails: React.FC = () => {
@@ -17,14 +20,15 @@ const DeckDetails: React.FC = () => {
     if (allDecksFromLocalStorage) {
       const parsedDecks: Record<string, Deck> = JSON.parse(allDecksFromLocalStorage);
       if (parsedDecks && parsedDecks[deckKey as keyof typeof parsedDecks]) {
-        setDeck(parsedDecks[deckKey as keyof typeof parsedDecks]);
+        const currentDeck = parsedDecks[deckKey as keyof typeof parsedDecks];
+        const contentArray = currentDeck.content || [];
+        setDeck({ ...currentDeck, content: contentArray });
       } else {
         navigate('/decks');
       }
     }
   }, [deckKey, navigate]);
   
-
   const menuLinks = deck && deck.name ? [
     {
       to: `/decks`,
@@ -47,8 +51,14 @@ const DeckDetails: React.FC = () => {
     <ColumnTemplate title={title} menu={menuLinks}>
       {deck && deck.name ? (
         <>
-          <h2>Name: {deck.name}</h2>
           <p>Description: {deck.description || "No description available"}</p>
+          {deck.createdDate && <p>Created on: {deck.createdDate}</p>}
+
+          <Table
+            data={deck.content}
+            dataToShow={['type', 'front', 'back']}
+          />
+
         </>
       ) : (
         <p>{title}</p>

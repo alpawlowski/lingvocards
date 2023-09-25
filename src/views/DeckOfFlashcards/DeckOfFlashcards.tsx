@@ -2,16 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledLink, StyledGrid } from "./DeckOfFlashcards.styles"
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { Deck, StyledHeading } from '../../components/Deck/Deck';
-
-interface UserData {
-  [key: string]: {
-    description?: string;
-  };
-}
+import { Deck, StyledHeading, StyledDescription, StyledContent, StyledDate } from '../../components/Deck/Deck';
+import DeckData from '../../types/DeckData';
 
 const DeckOfFlashcards: React.FC = () => {
-  const [userData, setUserData] = useState<UserData | ''>('');
+  const [deckData, setDeckData] = useState<DeckData | ''>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,12 +15,12 @@ const DeckOfFlashcards: React.FC = () => {
     if (savedData) {
       const parsedData = JSON.parse(savedData);
       if (Object.keys(parsedData).length > 0) {
-        setUserData(parsedData);
+        setDeckData(parsedData);
       } else {
-        setUserData('');
+        setDeckData('');
       }
     } else {
-      setUserData('');
+      setDeckData('');
     }
   }, []);
 
@@ -46,21 +41,30 @@ const DeckOfFlashcards: React.FC = () => {
   
   return (
     <ColumnTemplate title="Decks of flashcards" menu={menuLinks}>
-      { userData ? (
+      { deckData ? (
           <>
             <StyledGrid>
-              {Object.keys(userData).map(key => (
+              {Object.keys(deckData).map(key => {
+                const deck = deckData[key];
+                const contentLength = deck.content ? deck.content.length : 0;
+
+                return (
                   <Deck key={key} onClick={() => handleDeckClick(key)}>
                     <StyledHeading>
-                      {key}
+                      {deck.name}
                     </StyledHeading>
-                    {userData[key].description ? (
-                      <p>{userData[key].description}</p>
-                    ) : (
-                      <p>No description</p>
-                    )}
+                    <StyledDescription>
+                      Description: {deck.description}
+                    </StyledDescription>
+                    <StyledContent>
+                      Number of content: {contentLength}
+                    </StyledContent>
+                    <StyledDate>
+                      Created: {deck.createdDate}
+                    </StyledDate>
                   </Deck>
-                ))}
+                );
+              })}
             </StyledGrid>
           </>
         ) : (

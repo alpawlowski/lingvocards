@@ -22,8 +22,18 @@ const CreateDeck: React.FC = () => {
       if (decks[newDeckName]) {
         throw new Error('The deck name already exists');
       }
+
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const day = String(currentDate.getDate()).padStart(2, '0');
   
-      decks[newDeckName] = { name: newDeckName, description: newDeckDescription }; 
+      decks[newDeckName] = { 
+        name: newDeckName, 
+        description: newDeckDescription, 
+        createdDate: `${year}-${month}-${day}`,
+        content: []
+      }; 
       localStorage.setItem('decks', JSON.stringify(decks));
       setNewDeckName('');
       setNewDeckDescription('');
