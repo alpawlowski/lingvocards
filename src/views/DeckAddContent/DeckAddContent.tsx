@@ -82,7 +82,6 @@ const DeckAddContent: React.FC = () => {
       localStorage.setItem('decks', JSON.stringify(parsedDecks));
       setDeck(updatedDeck);
 
-      // Czyszczenie pól po dodaniu contentu
       setFrontText('');
       setFrontTranscription('');
       setBackText('');

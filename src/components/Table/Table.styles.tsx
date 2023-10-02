@@ -20,6 +20,7 @@ export const TableHead = styled.thead`
   background-color: ${({ theme }) => theme.colors.primaryLight};
   
   & td {
+    cursor: text;
     padding: 2rem;
     border-bottom-width: 2px;
   }

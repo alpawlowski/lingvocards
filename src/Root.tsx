@@ -8,6 +8,8 @@ import CreateDeck from './views/CreateDeck/CreateDeck';
 import DeckDetails from './views/DeckDetails/DeckDetails';
 import DeckAddContent from './views/DeckAddContent/DeckAddContent';
 import TreeLocalStorage from './views/TreeLocalStorage/TreeLocalStorage';
+import LearnDeck from './views/LearnDeck/LearnDeck';
+import LearnDeckBySelectedMethod from './views/LearnDeckBySelectedMethod/LearnDeckBySelectedMethod';
 
 function Root() {
 
@@ -17,6 +19,9 @@ function Root() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/decks" element={<DeckOfFlashcards />} />
+          <Route path="/learn" element={<LearnDeck />} />
+          {/* <Route path="/learn/:deckKey" element={<DeckDetails />} /> */}
+          <Route path="/learn/:deckKey/:method" element={<LearnDeckBySelectedMethod />} />
           <Route path="/create-deck" element={<CreateDeck />} />
           <Route path="/remove-deck" element={<RemoveDeck />} />
           <Route path="/deck-details/:deckKey" element={<DeckDetails />} />

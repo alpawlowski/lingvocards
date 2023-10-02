@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import Table from '../../components/Table/Table';
+import ButtonLink from '../../components/ButtonLink/ButtonLink';
+import { StyledRow } from './DeckDetails.styles'
+
+import { useAppContext } from '../../context/AppContext';
 
 interface Deck {
   name: string;
@@ -14,6 +18,7 @@ const DeckDetails: React.FC = () => {
   const navigate = useNavigate();
   const { deckKey } = useParams<{ deckKey: string }>();
   const [deck, setDeck] = useState<Deck | null>(null);
+  const { selectedLink, setSelectedLink } = useAppContext();
 
   useEffect(() => {
     const allDecksFromLocalStorage = localStorage.getItem('decks');
@@ -53,6 +58,27 @@ const DeckDetails: React.FC = () => {
         <>
           <p>Description: {deck.description || "No description available"}</p>
           {deck.createdDate && <p>Created on: {deck.createdDate}</p>}
+
+          <StyledRow>
+            <ButtonLink 
+              to={`/learn/${deck.name}/qwerty`} 
+              onClick={() => setSelectedLink(`learn/${deck.name}/qwerty`)}
+            >
+              Learn using the QWERTY method
+            </ButtonLink>
+            <ButtonLink 
+              to={`/learn/${deck.name}/flashcard`} 
+              onClick={() => setSelectedLink(`learn/${deck.name}/flashcard`)}
+            >
+              Learn using the FLASHCARDS method
+            </ButtonLink>
+            <ButtonLink 
+              to={`/learn/${deck.name}/all`} 
+              onClick={() => setSelectedLink(`learn/${deck.name}/all`)}
+            >
+              Learn using the ALL methods
+            </ButtonLink>
+          </StyledRow>
 
           <Table
             data={deck.content}

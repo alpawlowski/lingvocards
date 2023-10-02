@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StyledLink, StyledGrid } from "./DeckOfFlashcards.styles"
+import { StyledLink, StyledGrid } from "./LearnDeck.styles"
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { Deck, StyledHeading, StyledDescription, StyledContent, StyledDate } from '../../components/Deck/Deck';
+import { Input } from '../../components/Input/Input';
 import DeckData from '../../types/DeckData';
 
-const DeckOfFlashcards: React.FC = () => {
+const LearnDeck: React.FC = () => {
   const [deckData, setDeckData] = useState<DeckData | ''>('');
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const DeckOfFlashcards: React.FC = () => {
   }, []);
 
   const handleDeckClick = (deckKey: string) => {
-    navigate(`/deck-details/${deckKey}`);
+    navigate(`/learn/${deckKey}`);
   };
 
   const menuLinks = [
@@ -49,29 +49,16 @@ const DeckOfFlashcards: React.FC = () => {
                 const contentLength = deck.content ? deck.content.length : 0;
 
                 return (
-                  <Deck key={key} onClick={() => handleDeckClick(key)}>
-                    <StyledHeading>
-                      {deck.name}
-                    </StyledHeading>
-                    <StyledDescription>
-                      Description: {deck.description}
-                    </StyledDescription>
-                    <StyledContent>
-                      Number of content: {contentLength}
-                    </StyledContent>
-                    <StyledDate>
-                      Created on: {deck.createdDate}
-                    </StyledDate>
-                  </Deck>
+                  <Input></Input>
                 );
               })}
             </StyledGrid>
           </>
         ) : (
           <>
-            <h2>No flashcard deck in your pack</h2>
-            <StyledLink to='/create-deck'>
-              Create a new deck
+            <h2>There is no flashcards to learn in this deck</h2>
+            <StyledLink to='/learn'>
+              Learn other deck
             </StyledLink>
           </>
         )}
@@ -79,4 +66,4 @@ const DeckOfFlashcards: React.FC = () => {
   )
 }
 
-export default DeckOfFlashcards;
+export default LearnDeck;

@@ -1,12 +1,18 @@
 import React from 'react';
 import { SidebarContainer, ToggleMenuWrapper, ToggleMenuButton, MenuWrapper, MenuItem } from './Sidebar.styles';
 
+import { useAppContext } from '../../context/AppContext';
+
 interface SidebarProps {
   isOpen?: boolean;
   toggleMenu?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleMenu}) => {
+
+  const { selectedLink, defaultLink } = useAppContext();
+
+  const linkToUse = selectedLink || defaultLink;
 
   return (
     <SidebarContainer  isOpen={isOpen}>
@@ -26,6 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleMenu}) => {
       {isOpen && (
         <MenuWrapper>
           <MenuItem to="/">Home</MenuItem>
+          <MenuItem to={linkToUse}>Learn</MenuItem>
           <MenuItem to="/decks">Decks</MenuItem>
           <MenuItem to="/tree">Tree</MenuItem>
         </MenuWrapper>

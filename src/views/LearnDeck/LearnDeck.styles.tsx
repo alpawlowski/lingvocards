@@ -44,10 +44,3 @@ export const StyledGrid = styled.div`
   width: 100%;
   align-items: center;
 `;
-
-export const StyledRow = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-start;
-`;

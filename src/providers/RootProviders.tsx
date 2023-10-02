@@ -3,20 +3,23 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../assets/styles/GlobalStyles';
 import { theme } from '../assets/styles/theme';
+import { AppProvider } from '../context/AppContext';
 
-interface AppProvidersProps {
+interface RootProvidersProps {
   children: ReactNode;
 }
 
-const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
+const RootProviders: React.FC<RootProvidersProps> = ({ children }) => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        {children}
+        <AppProvider>
+          {children}
+        </AppProvider>
       </ThemeProvider>
     </Router>
   );
 };
 
-export default AppProviders;
+export default RootProviders;
