@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import DeckData from '../types/DeckData';
 
 interface AppContextProps {
   selectedLink: string | null;
   setSelectedLink: React.Dispatch<React.SetStateAction<string | null>>;
   defaultLink: string;
+  decks: DeckData | null;
 }
 
 interface AppProviderProps {
@@ -14,11 +16,18 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedLink, setSelectedLink] = useState<string | null>(null);
-
+  const [decks, setDecks] = useState<DeckData | null>(null);
   const defaultLink = '/learn';
 
+  useEffect(() => {
+    const storedDecks = localStorage.getItem('decks');
+    if (storedDecks) {
+      setDecks(JSON.parse(storedDecks));
+    }
+  }, []);
+
   return (
-    <AppContext.Provider value={{ selectedLink, setSelectedLink, defaultLink }}>
+    <AppContext.Provider value={{ selectedLink, setSelectedLink, defaultLink, decks }}>
       {children}
     </AppContext.Provider>
   );

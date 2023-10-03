@@ -5,14 +5,8 @@ import Table from '../../components/Table/Table';
 import ButtonLink from '../../components/ButtonLink/ButtonLink';
 import { StyledRow } from './DeckDetails.styles'
 
+import Deck from '../../types/Deck';
 import { useAppContext } from '../../context/AppContext';
-
-interface Deck {
-  name: string;
-  description?: string;
-  content: { [key: string]: { text: string } }[];
-  createdDate?: string;
-}
 
 const DeckDetails: React.FC = () => {
   const navigate = useNavigate();
