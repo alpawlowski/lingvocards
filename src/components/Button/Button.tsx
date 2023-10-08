@@ -15,14 +15,36 @@ const Button = styled.button<ButtonProps>`
   justify-content: center;
   margin: 1rem 1.5rem;
   height: 47px;
-  color: ${({ theme }) => theme.colors.gold};
-  border: 2px solid ${({ theme }) => theme.colors.gold};
+  color: ${({ theme }) => theme.colors.gray};
+  border: 2px solid ${({ theme }) => theme.colors.gray};
   border-radius: 50px;
   background: ${({ theme }) => theme.colors.primary};
   
   &:hover {
-    color: ${({ theme }) => theme.colors.gray};
-    border: 2px solid ${({ theme }) => theme.colors.gray};
+    color: ${({ theme }) => theme.colors.gold};
+    border: 2px solid ${({ theme }) => theme.colors.gold};
+  }
+
+  & > svg > path {
+    stroke: ${({theme}) => theme.colors.gray};
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    padding-right: 1.5rem;
+  }
+
+  &:hover path {
+    stroke: ${({theme}) => theme.colors.gold};
+  } 
+  
+  &:disabled {
+    color: ${({ theme }) => theme.colors.secondary};
+    border: 2px solid ${({ theme }) => theme.colors.secondary};
+    cursor: not-allowed;
+    
+    & > svg > path {
+      stroke: ${({theme}) => theme.colors.secondary};
+    }
   }
   
   ${({ secondary }) =>

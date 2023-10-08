@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StyledLink, StyledGrid } from "./LearnDeck.styles"
+import { StyledLink, StyledGrid } from "./LearnSelectedDeck.styles"
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { Input } from '../../components/Input/Input';
+import Input from '../../components/Input/Input';
 import DeckData from '../../types/DeckData';
 
 const LearnDeck: React.FC = () => {

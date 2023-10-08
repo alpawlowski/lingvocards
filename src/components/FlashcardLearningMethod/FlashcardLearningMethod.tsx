@@ -1,60 +1,53 @@
-import React, { useState, KeyboardEvent  } from 'react';
+import React, { useState  } from 'react';
 import { Wrapper, FlipcardContainer, FlipcardFront, FlipcardBack, FlipcardContent, ButtonsWrapper, StyledButton } from './FlashcardLearningMethod.styles';
-import DeckData from '../../types/DeckData';
+import Deck from '../../types/Deck';
 
 interface FlashcardLearningMethodProps {
-  deckData: DeckData;
-  deckKey: string;
+  deck: Deck;
 }
 
-const FlashcardLearningMethod: React.FC<FlashcardLearningMethodProps> = ({ deckData, deckKey }) => {
+const FlashcardLearningMethod: React.FC<FlashcardLearningMethodProps> = ({ deck }) => {
 
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const deck = deckData;
-  const deckName = deckKey;
 
   const handleFlip = () => {
     setIsFlipped((isFlipped) => !isFlipped);
   }
 
   const handleNext = () => {
-    if (currentIndex < deck[deckName].content.length - 1) {
+    if (currentIndex < deck.content.length - 1) {
+      setIsFlipped(false);
       setCurrentIndex(currentIndex + 1);
     }
   }
 
   const handlePrev = () => {
     if (currentIndex > 0) {
+      setIsFlipped(false);
       setCurrentIndex(currentIndex - 1);
     }
   }
 
-  // const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Space') {
-  //     handleFlip();
-  //   }
-  // };
-
-  if (!deck || !deck[deckName].content[currentIndex]) {
+  if (!deck || !deck.content[currentIndex]) {
     return null;
   }
 
   return (
     <Wrapper>
-      <FlipcardContainer isFlipped={isFlipped}>
+      <p>{`${currentIndex + 1} / ${deck.content.length}`}</p>
+      <FlipcardContainer isFlipped={isFlipped} >
         <FlipcardFront>
-          <FlipcardContent isVisible={!isFlipped}>{deck[deckName].content[currentIndex].front.text}</FlipcardContent>
+          <FlipcardContent isVisible={!isFlipped}>{deck.content[currentIndex].front.text}</FlipcardContent>
         </FlipcardFront>
         <FlipcardBack>
-          <FlipcardContent isVisible={isFlipped}>{deck[deckName].content[currentIndex].back.text}</FlipcardContent>
+          <FlipcardContent isVisible={isFlipped}>{deck.content[currentIndex].back.text}</FlipcardContent>
         </FlipcardBack>
       </FlipcardContainer>
       <ButtonsWrapper>
         <StyledButton onClick={handlePrev} disabled={currentIndex === 0}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 17L3 12M3 12L8 7M3 12H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 17L3 12M3 12L8 7M3 12H21" />
           </svg>
         </StyledButton>
         <StyledButton onClick={handleFlip}>
@@ -65,9 +58,9 @@ const FlashcardLearningMethod: React.FC<FlashcardLearningMethodProps> = ({ deckD
             Flip Flashcard
           </span>
         </StyledButton>
-        <StyledButton onClick={handleNext} disabled={currentIndex === deck[deckName].content.length - 1}>
+        <StyledButton onClick={handleNext} disabled={currentIndex === deck.content.length - 1}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 7L21 12M21 12L16 17M21 12H3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 7L21 12M21 12L16 17M21 12H3" />
           </svg>
         </StyledButton>
       </ButtonsWrapper>

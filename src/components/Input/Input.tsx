@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-export const Input = styled.input`
+const Input = styled.input`
   padding: 0 2rem;
   margin: 1rem 1.5rem;
   font-weight: bold;
   height: 47px;
-  border: 1px solid ${({ theme }) => theme.colors.blue};
   box-sizing: border-box;
   color: ${({ theme }) => theme.colors.gold};
   border: 2px solid ${({ theme }) => theme.colors.gray};
@@ -20,3 +19,5 @@ export const Input = styled.input`
     box-shadow: -2px 4px 10px rgba(115, 124, 142, 0.3);
   }
 `;
+
+export default Input;

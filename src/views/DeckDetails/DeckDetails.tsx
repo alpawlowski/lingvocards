@@ -66,12 +66,6 @@ const DeckDetails: React.FC = () => {
             >
               Learn using the FLASHCARDS method
             </ButtonLink>
-            <ButtonLink 
-              to={`/learn/${deck.name}/all`} 
-              onClick={() => setSelectedLink(`learn/${deck.name}/all`)}
-            >
-              Learn using the ALL methods
-            </ButtonLink>
           </StyledRow>
 
           <Table

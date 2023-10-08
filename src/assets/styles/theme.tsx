@@ -9,6 +9,10 @@ export const theme = {
     secondary: '#1C1C20',
     gray: '#8c9ea8',
     gold: '#F7E5C3',
+    correct: '#ccf7c3',
+    correctRGB: '204, 247, 195',
+    bad: '#f7cbc3',
+    badRGB: '247, 203, 195',
     transparent: 'hsla(0, 0%, 0%, 0.0);',
   },
   fonts: {

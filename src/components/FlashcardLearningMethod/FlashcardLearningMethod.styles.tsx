@@ -51,13 +51,16 @@ export const FlipcardBack = styled.div`
   background-color: ${({theme}) => theme.colors.primaryLight};
 `;
 
+
 export const FlipcardContent = styled.div<FlipcardContentProps>`
-  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-  display: flex;
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  color: ${({ theme }) => theme.colors.gold};
+  font-weight: ${({ theme }) => theme.fonts.bold};
+  font-size: 2rem;
 `;
 
 export const ButtonsWrapper = styled.div`
@@ -67,23 +70,8 @@ export const ButtonsWrapper = styled.div`
   
 export const StyledButton = styled(Button)`
 
-  & > svg > path {
-    stroke: ${({theme}) => theme.colors.gold};
-    stroke-width: 1;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  &.check > svg {
+    margin-right: .5rem;
   }
 
-  &:hover path {
-    stroke: ${({theme}) => theme.colors.gray};
-  } 
-  
-  &:disabled {
-    color: ${({ theme }) => theme.colors.gray};
-    border: 2px solid ${({ theme }) => theme.colors.gray};
-    
-    & > svg > path {
-      stroke: ${({theme}) => theme.colors.gray};
-    }
-  }
 `;

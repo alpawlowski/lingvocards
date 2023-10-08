@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import { StyledGrid } from './DeckAddContent.styles';
 import Button from '../../components/Button/Button';
-import { Input } from '../../components/Input/Input';
+import Input from '../../components/Input/Input';
 
 interface Deck {
   name: string;
