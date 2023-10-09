@@ -1,6 +1,8 @@
 import React, { useState  } from 'react';
 import { Wrapper, FlipcardContainer, FlipcardFront, FlipcardBack, FlipcardContent, ButtonsWrapper, StyledButton } from './FlashcardLearningMethod.styles';
 import Deck from '../../types/Deck';
+import ProgressBar from '../ProgressBar/ProgressBar';
+import { handleTextToSpeech } from '../../utils/helpers';
 
 interface FlashcardLearningMethodProps {
   deck: Deck;
@@ -29,19 +31,33 @@ const FlashcardLearningMethod: React.FC<FlashcardLearningMethodProps> = ({ deck 
     }
   }
 
+  const handleClickTextToSpeech = (text) => {
+    handleTextToSpeech(text);
+  };
+
   if (!deck || !deck.content[currentIndex]) {
     return null;
   }
 
   return (
     <Wrapper>
-      <p>{`${currentIndex + 1} / ${deck.content.length}`}</p>
+      <ProgressBar totalCards={deck.content.length} currentCardIndex={currentIndex} />
       <FlipcardContainer isFlipped={isFlipped} >
         <FlipcardFront>
-          <FlipcardContent isVisible={!isFlipped}>{deck.content[currentIndex].front.text}</FlipcardContent>
+          <FlipcardContent isVisible={!isFlipped}>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => handleClickTextToSpeech(deck.content[currentIndex].front.text)}>
+              <path d="M6 18V14M6 14H8L13 17V7L8 10H5C3.89543 10 3 10.8954 3 12V12C3 13.1046 3.89543 14 5 14H6ZM17 7L19 5M17 17L19 19M19 12H21" />
+            </svg>
+            {deck.content[currentIndex].front.text}
+          </FlipcardContent>
         </FlipcardFront>
         <FlipcardBack>
-          <FlipcardContent isVisible={isFlipped}>{deck.content[currentIndex].back.text}</FlipcardContent>
+          <FlipcardContent isVisible={isFlipped}>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => handleClickTextToSpeech(deck.content[currentIndex].back.text)}>
+              <path d="M6 18V14M6 14H8L13 17V7L8 10H5C3.89543 10 3 10.8954 3 12V12C3 13.1046 3.89543 14 5 14H6ZM17 7L19 5M17 17L19 19M19 12H21" />
+            </svg>
+            {deck.content[currentIndex].back.text}
+          </FlipcardContent>
         </FlipcardBack>
       </FlipcardContainer>
       <ButtonsWrapper>

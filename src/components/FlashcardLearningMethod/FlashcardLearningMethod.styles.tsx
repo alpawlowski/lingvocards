@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '../Button/Button';
 
 interface FlipcardProps {
@@ -34,21 +34,25 @@ export const FlipcardContainer = styled.div<FlipcardProps>`
   margin-bottom: 2rem;
 `;
 
-export const FlipcardFront = styled.div`
+const CommonFlipcardStyles = css`
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   background-color: ${({theme}) => theme.colors.primaryLight};
+  border-radius: 1.5rem;
+  & * {
+    text-shadow: 1px 5px .5rem ${({theme}) => theme.colors.primary};
+  }
+`;
+
+export const FlipcardFront = styled.div`
+  ${CommonFlipcardStyles}
 `;
 
 export const FlipcardBack = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
+  ${CommonFlipcardStyles}
   transform: rotateY(180deg);
-  background-color: ${({theme}) => theme.colors.primaryLight};
 `;
 
 
@@ -61,6 +65,27 @@ export const FlipcardContent = styled.div<FlipcardContentProps>`
   color: ${({ theme }) => theme.colors.gold};
   font-weight: ${({ theme }) => theme.fonts.bold};
   font-size: 2rem;
+
+  & > svg{
+    cursor: pointer;
+    margin-right: 1.5rem;
+  }
+
+  & > svg > path {
+    stroke: ${({theme}) => theme.colors.gray};
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  & > svg:hover > path {
+    stroke: ${({theme}) => theme.colors.gray};
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: ${({theme}) => theme.colors.gray};
+  }
+  
 `;
 
 export const ButtonsWrapper = styled.div`
