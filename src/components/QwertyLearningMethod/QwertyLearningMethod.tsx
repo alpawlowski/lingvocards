@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, KeyboardEvent, ChangeEvent} from 'r
 import { Wrapper, QwertyContainer, QwertyContent, StyledInput, ButtonsWrapper, StyledButton } from './QwertyLearningMethod.styles';
 import DeckData from '../../types/DeckData';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { handleTextToSpeech } from '../../utils/helpers';
 
 interface QwertyLearningMethodProps {
   deck: DeckData;
@@ -11,10 +12,12 @@ const QwertyLearningMethod: React.FC<QwertyLearningMethodProps> = ({ deck }) => 
 
   const [enteredAnswer, setEnteredAnswer] = useState<string>('');
   const [infoMessage, setInfoMessage] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const inputRef = useRef(null);
 
+  
   const handleCheck = () => {
     let correctAnswer = deck.content[currentIndex].back.text;
     let answer = enteredAnswer.toLowerCase();
@@ -58,7 +61,6 @@ const QwertyLearningMethod: React.FC<QwertyLearningMethodProps> = ({ deck }) => 
       setEnteredAnswer('');
       resetInputStyles();
     }
-
   }
 
   const handlePrev = () => {
@@ -74,6 +76,16 @@ const QwertyLearningMethod: React.FC<QwertyLearningMethodProps> = ({ deck }) => 
     inputRef.current.focus();
   }, [currentIndex, handlePrev, handleNext]);
 
+  const handleClickTextToSpeech = (text: string, language: string) => {
+    const languageError = handleTextToSpeech(text, language);
+    setError(languageError || '');
+  
+    if (languageError) {
+      setTimeout(() => {
+        setError('');
+      }, 1000);
+    }
+  };
 
   if (!deck || !deck.content[currentIndex]) {
     return null;
@@ -84,11 +96,14 @@ const QwertyLearningMethod: React.FC<QwertyLearningMethodProps> = ({ deck }) => 
       <p>Enter a translation for the word below</p>
       <ProgressBar totalCards={deck.content.length} currentCardIndex={currentIndex} />
       {/* { infoMessage && <h2> {infoMessage}</h2> } */}
+      { error && <p className="error"> {error}</p> }
       <QwertyContainer>
         <QwertyContent>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 18V14M6 14H8L13 17V7L8 10H5C3.89543 10 3 10.8954 3 12V12C3 13.1046 3.89543 14 5 14H6ZM17 7L19 5M17 17L19 19M19 12H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          { !error && 
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => handleClickTextToSpeech(deck.content[currentIndex].front.text, deck.content[currentIndex].front.language.code)}>
+              <path d="M6 18V14M6 14H8L13 17V7L8 10H5C3.89543 10 3 10.8954 3 12V12C3 13.1046 3.89543 14 5 14H6ZM17 7L19 5M17 17L19 19M19 12H21" />
+            </svg>
+          }
           <h2>{deck.content[currentIndex].front.text}</h2>
         </QwertyContent>
         {/* <h2>{deck.content[currentIndex].back.text}</h2> */}

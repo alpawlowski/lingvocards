@@ -9,11 +9,21 @@ interface DeckData {
       };
       front: {
         text: string;
-        transcription: string;
+        language: { 
+          original_name: string;
+          code: string;
+          flag: string;
+          english_name: string;
+        };
       };
       back: {
         text: string;
-        transcription: string;
+        language: { 
+          original_name: string;
+          code: string;
+          flag: string;
+          english_name: string;
+        };
       };
     }[];
   };

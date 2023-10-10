@@ -34,5 +34,9 @@ export const GlobalStyles = createGlobalStyle`
   .container {
     max-width: 1440px;
   }
+
+  .error {
+    color: ${({theme}) => theme.colors.bad};
+  }
   
 `;

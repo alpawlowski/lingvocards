@@ -1,46 +1,38 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { StyledGrid } from './DeckAddContent.styles';
+import { StyledWrapper, StyledSelect } from './DeckAddContent.styles';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
-
-interface Deck {
-  name: string;
-  description?: string;
-  content: {
-    type: string;
-    front: {
-      text: string;
-      transcription: string;
-    };
-    back: {
-      text: string;
-      transcription: string;
-    };
-  }[];
-}
+import { getLanguages } from '../../utils/helpers';
+import DeckData from '../../types/DeckData';
 
 enum CardType {
   Flashcard = "flashcard",
   Qwerty = "qwerty",
 }
 
+const defaultLanguage = {
+  original_name: 'English (US)',
+  code: 'en-US',
+  flag: '🇺🇸',
+  english_name: 'English (US)',
+};
+
 const DeckAddContent: React.FC = () => {
   const { deckKey } = useParams<{ deckKey: string }>();
-  const [deck, setDeck] = useState<Deck | null>(null);
+  const [deck, setDeck] = useState<DeckData | null>(null);
   const [selectedType, setSelectedType] = useState<CardType>(CardType.Flashcard);
-  const [showFrontTranscription, setShowFrontTranscription] = useState<boolean>(false);
-  const [showBackTranscription, setShowBackTranscription] = useState<boolean>(false);
   const [frontText, setFrontText] = useState<string>('');
-  const [frontTranscription, setFrontTranscription] = useState<string>('');
   const [backText, setBackText] = useState<string>('');
-  const [backTranscription, setBackTranscription] = useState<string>('');
+  const [showLanguageSelectors, setShowLanguageSelectors] = useState<boolean>(false);
+  const [frontLanguage, setFrontLanguage] = useState(defaultLanguage);
+  const [backLanguage, setBackLanguage] = useState(defaultLanguage);
 
   useEffect(() => {
     const allDecksFromLocalStorage = localStorage.getItem('decks');
     if (allDecksFromLocalStorage) {
-      const parsedDecks: Record<string, Deck> = JSON.parse(allDecksFromLocalStorage);
+      const parsedDecks: Record<string, DeckData> = JSON.parse(allDecksFromLocalStorage);
       setDeck(parsedDecks[deckKey]);
     }
   }, [deckKey]);
@@ -57,13 +49,13 @@ const DeckAddContent: React.FC = () => {
         },
         front: {
           text: frontText,
-          transcription: showFrontTranscription ? frontTranscription : '',
+          language: frontLanguage,
         },
         back: {
           text: backText,
-          transcription: showBackTranscription ? backTranscription : '',
+          language: backLanguage,
         },
-      };
+      };      
 
       const updatedContent = [...deck.content, newContent];
 
@@ -73,7 +65,7 @@ const DeckAddContent: React.FC = () => {
       };
 
       const allDecksFromLocalStorage = localStorage.getItem('decks');
-      const parsedDecks: Record<string, Deck> = allDecksFromLocalStorage
+      const parsedDecks: Record<string, DeckData> = allDecksFromLocalStorage
         ? JSON.parse(allDecksFromLocalStorage)
         : {};
 
@@ -81,11 +73,10 @@ const DeckAddContent: React.FC = () => {
 
       localStorage.setItem('decks', JSON.stringify(parsedDecks));
       setDeck(updatedDeck);
-
       setFrontText('');
-      setFrontTranscription('');
       setBackText('');
-      setBackTranscription('');
+      setFrontLanguage(defaultLanguage);
+      setBackLanguage(defaultLanguage);
     } catch (error) {
       console.error(error);
     }
@@ -100,7 +91,7 @@ const DeckAddContent: React.FC = () => {
 
   return (
     <ColumnTemplate title={`Add content to deck - ${deck?.name || ''}`} menu={menuLinks}>
-            <StyledGrid>
+      <StyledWrapper>
         <Input
           type="text"
           maxLength={255}
@@ -108,6 +99,21 @@ const DeckAddContent: React.FC = () => {
           value={frontText}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setFrontText(e.target.value)}
         />
+        {showLanguageSelectors && (
+           <StyledSelect
+            value={frontLanguage.code}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              const selectedLanguage = getLanguages().find(language => language.code === e.target.value);
+              setFrontLanguage(selectedLanguage);
+            }}
+          >
+            {getLanguages().map(language => (
+              <option key={language.code} value={language.code}>
+                {language.english_name}  {language.flag}
+              </option>
+            ))}
+          </StyledSelect>
+        )}
         <Input
           type="text"
           maxLength={255}
@@ -115,52 +121,31 @@ const DeckAddContent: React.FC = () => {
           value={backText}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setBackText(e.target.value)}
         />
-        <label>
-          Show Front Transcription
-          <input
-            type="checkbox"
-            checked={showFrontTranscription}
-            onChange={() => setShowFrontTranscription(!showFrontTranscription)}
-          />
-        </label>
-        {showFrontTranscription && (
-          <Input
-            type="text"
-            maxLength={255}
-            placeholder="Front Transcription"
-            value={frontTranscription}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setFrontTranscription(e.target.value)}
-          />
+        {showLanguageSelectors && (
+          <StyledSelect
+            value={backLanguage.code}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              const selectedLanguage = getLanguages().find(language => language.code === e.target.value);
+              setBackLanguage(selectedLanguage);
+            }}
+          >
+            {getLanguages().map(language => (
+              <option key={language.code} value={language.code}>
+                {language.english_name}  {language.flag}
+              </option>
+            ))}
+          </StyledSelect>
         )}
         <label>
-          Show Back Transcription
+          Show Language Selectors
           <input
             type="checkbox"
-            checked={showBackTranscription}
-            onChange={() => setShowBackTranscription(!showBackTranscription)}
+            checked={showLanguageSelectors}
+            onChange={() => setShowLanguageSelectors(!showLanguageSelectors)}
           />
         </label>
-        {showBackTranscription && (
-          <Input
-            type="text"
-            maxLength={255}
-            placeholder="Back Transcription"
-            value={backTranscription}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setBackTranscription(e.target.value)}
-          />
-        )}
-        <select
-          value={selectedType}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedType(e.target.value as CardType)}
-        >
-          {Object.values(CardType).map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
         <Button onClick={handleCreateContent}>Add Content</Button>
-      </StyledGrid>
+      </StyledWrapper>
     </ColumnTemplate>
   );
 }
