@@ -70,6 +70,7 @@ const DeckDetails: React.FC = () => {
 
           <Table
             data={deck.content}
+            deckName={deck.name}
             dataToShow={['type', 'front', 'back']}
           />
 

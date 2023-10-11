@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { StyledWrapper, StyledSelect } from './DeckAddContent.styles';
+import { StyledWrapper, StyledSelect } from './DeckEditContent.styles';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import { getLanguages } from '../../utils/helpers';
@@ -19,8 +19,8 @@ const defaultLanguage = {
   english_name: 'English (US)',
 };
 
-const DeckAddContent: React.FC = () => {
-  const { deckKey } = useParams<{ deckKey: string }>();
+const DeckEditContent: React.FC = () => {
+  const { deckKey, contentIndex } = useParams<{ deckKey: string; contentIndex: string }>();
   const [deck, setDeck] = useState<DeckData | null>(null);
   const [selectedType, setSelectedType] = useState<CardType>(CardType.Flashcard);
   const [frontText, setFrontText] = useState<string>('');
@@ -28,6 +28,7 @@ const DeckAddContent: React.FC = () => {
   const [showLanguageSelectors, setShowLanguageSelectors] = useState<boolean>(false);
   const [frontLanguage, setFrontLanguage] = useState(defaultLanguage);
   const [backLanguage, setBackLanguage] = useState(defaultLanguage);
+  const [editingContentIndex, setEditingContentIndex] = useState<number | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,30 +36,33 @@ const DeckAddContent: React.FC = () => {
     if (allDecksFromLocalStorage) {
       const parsedDecks: Record<string, DeckData> = JSON.parse(allDecksFromLocalStorage);
       setDeck(parsedDecks[deckKey]);
-    }
-  }, [deckKey]);
 
-  const handleCreateContent = () => {
+      setEditingContentIndex(Number(contentIndex));
+
+      const contentToEdit = parsedDecks[deckKey]?.content[Number(contentIndex)] || null;
+
+      if (contentToEdit) {
+        setSelectedType(contentToEdit.type.text);
+        setFrontText(contentToEdit.front.text);
+        setBackText(contentToEdit.back.text);
+        setFrontLanguage(contentToEdit.front.language);
+        setBackLanguage(contentToEdit.back.language);
+      }
+    }
+  }, [deckKey, contentIndex]);
+
+  const handleEditContent = () => {
     try {
-      if (!deck) {
-        throw new Error('Deck not found');
+      if (!deck || editingContentIndex === null || editingContentIndex < 0) {
+        throw new Error('Invalid content index');
       }
 
-      const newContent = {
-        type: {
-          text: selectedType,
-        },
-        front: {
-          text: frontText,
-          language: frontLanguage,
-        },
-        back: {
-          text: backText,
-          language: backLanguage,
-        },
-      };      
-
-      const updatedContent = [...deck.content, newContent];
+      const updatedContent = [...deck.content];
+      updatedContent[editingContentIndex] = {
+        type: { text: selectedType },
+        front: { text: frontText, language: frontLanguage },
+        back: { text: backText, language: backLanguage },
+      };
 
       const updatedDeck = {
         ...deck,
@@ -78,6 +82,7 @@ const DeckAddContent: React.FC = () => {
       setBackText('');
       setFrontLanguage(defaultLanguage);
       setBackLanguage(defaultLanguage);
+      setEditingContentIndex(null);
       navigate(`/deck-details/${deck.name}`);
     } catch (error) {
       console.error(error);
@@ -97,7 +102,7 @@ const DeckAddContent: React.FC = () => {
   ];
 
   return (
-    <ColumnTemplate title={`Add content to deck - ${deck?.name || ''}`} menu={menuLinks}>
+    <ColumnTemplate title={`Edit content to deck - ${deck?.name || ''}`} menu={menuLinks}>
       <StyledWrapper>
         <Input
           type="text"
@@ -151,10 +156,10 @@ const DeckAddContent: React.FC = () => {
             onChange={() => setShowLanguageSelectors(!showLanguageSelectors)}
           />
         </label>
-        <Button onClick={handleCreateContent}>Add Content</Button>
+        <Button onClick={handleEditContent}>Save changes</Button>
       </StyledWrapper>
     </ColumnTemplate>
   );
 }
 
-export default DeckAddContent;
+export default DeckEditContent;

@@ -6,6 +6,7 @@ import DeckOfFlashcards from './views/DeckOfFlashcards/DeckOfFlashcards';
 import RemoveDeck from './views/RemoveDeck/RemoveDeck';
 import CreateDeck from './views/CreateDeck/CreateDeck';
 import DeckDetails from './views/DeckDetails/DeckDetails';
+import DeckEditContent from './views/DeckEditContent/DeckEditContent';
 import DeckAddContent from './views/DeckAddContent/DeckAddContent';
 import TreeLocalStorage from './views/TreeLocalStorage/TreeLocalStorage';
 import LearnDeck from './views/LearnDeck/LearnDeck';
@@ -25,6 +26,7 @@ function Root() {
           <Route path="/create-deck" element={<CreateDeck />} />
           <Route path="/remove-deck" element={<RemoveDeck />} />
           <Route path="/deck-details/:deckKey" element={<DeckDetails />} />
+          <Route path="/:deckKey/edit/:contentIndex" element={<DeckEditContent />} />
           <Route path="/:deckKey/add" element={<DeckAddContent />} />
           <Route path="/tree" element={<TreeLocalStorage />} />
           <Route path="*" element={<Navigate to="/" replace />} />

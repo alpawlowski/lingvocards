@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 interface TableProps {
   data: { [key: string]: { text: string } }[];
   dataToShow: string[];
+  deckName: string;
 }
 
 const labelsMap: { [key: string]: string } = {
@@ -14,7 +15,7 @@ const labelsMap: { [key: string]: string } = {
   back: 'Back',
 };
 
-const Table: React.FC<TableProps> = ({ data, dataToShow }) => {
+const Table: React.FC<TableProps> = ({ data, dataToShow, deckName }) => {
   const [tableData, setTableData] = useState(data);
 
   const handleDeleteCard = (index: number) => {
@@ -79,7 +80,7 @@ const Table: React.FC<TableProps> = ({ data, dataToShow }) => {
               </EmptyCell>
             </TableRow>
           ) : (
-            tableData.map((item, index) => (
+            tableData.map((item, index, arr) => (
               <TableRow 
                 key={index} 
                 draggable={true} 
@@ -94,8 +95,8 @@ const Table: React.FC<TableProps> = ({ data, dataToShow }) => {
                 ))}
                 <TableCell>
                   <ButtonsContainer>
-                    <ButtonLink secondary to={`/decks`}>
-                      Show details
+                    <ButtonLink secondary to={`/${deckName}/edit/${index}`}>
+                      Edit
                     </ButtonLink>
                     <Button secondary onClick={() => handleDeleteCard(index)}>
                       Delete
