@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { ViewWrapper } from '../../components/ViewWrapper/ViewWrapper';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -9,10 +8,6 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-`;
-
-export const InnerWrapper = styled(ViewWrapper)`
-
 `;
 
 export const StyledLink = styled(NavLink)`
@@ -35,12 +30,4 @@ export const StyledLink = styled(NavLink)`
     border: 2px solid ${({ theme }) => theme.colors.gray};
     background: ${({ theme }) => theme.colors.primary};
   }
-`;
-
-export const StyledGrid = styled.div`
-  display: grid;
-  grid-gap: 5rem;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-  align-items: center;
 `;

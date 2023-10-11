@@ -8,7 +8,16 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  & > h1, h2, p {
+  & > h2 {
     color: ${({ theme }) => theme.colors.gray};
+  }
+  
+  & > h1 {
+    color: ${({ theme }) => theme.colors.gold};
+    font-size: 4rem;
+  }
+
+  & a button {
+    margin: 4rem;
   }
 `;

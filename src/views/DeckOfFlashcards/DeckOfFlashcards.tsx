@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StyledLink, StyledGrid } from "./DeckOfFlashcards.styles"
+import { StyledLink, StyledGrid } from "./DeckOfFlashcards.styles";
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import { Deck, StyledHeading, StyledDescription, StyledContent, StyledDate } from '../../components/Deck/Deck';
-import DeckData from '../../types/DeckData';
+import { useAppContext } from '../../context/AppContext'; // Dodane importowanie
 
 const DeckOfFlashcards: React.FC = () => {
-  const [deckData, setDeckData] = useState<DeckData | ''>('');
+  const { decks } = useAppContext(); // Pobieranie `decks` z AppContext
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedData = localStorage.getItem('decks');
-
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      if (Object.keys(parsedData).length > 0) {
-        setDeckData(parsedData);
-      } else {
-        setDeckData('');
-      }
-    } else {
-      setDeckData('');
-    }
-  }, []);
 
   const handleDeckClick = (deckKey: string) => {
     navigate(`/deck-details/${deckKey}`);
@@ -41,11 +26,11 @@ const DeckOfFlashcards: React.FC = () => {
   
   return (
     <ColumnTemplate title="Decks of flashcards" menu={menuLinks}>
-      { deckData ? (
+      { decks ? (
           <>
             <StyledGrid>
-              {Object.keys(deckData).map(key => {
-                const deck = deckData[key];
+              {Object.keys(decks).map(key => {
+                const deck = decks[key];
                 const contentLength = deck.content ? deck.content.length : 0;
 
                 return (
@@ -76,7 +61,7 @@ const DeckOfFlashcards: React.FC = () => {
           </>
         )}
     </ColumnTemplate>
-  )
+  );
 }
 
 export default DeckOfFlashcards;
