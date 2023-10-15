@@ -11,23 +11,21 @@ import { useAppContext } from '../../context/AppContext';
 const DeckDetails: React.FC = () => {
   const navigate = useNavigate();
   const { deckKey } = useParams<{ deckKey: string }>();
+  const { decks } = useAppContext();
   const [deck, setDeck] = useState<Deck | null>(null);
   const { selectedLink, setSelectedLink } = useAppContext();
 
   useEffect(() => {
-    const allDecksFromLocalStorage = localStorage.getItem('decks');
-    if (allDecksFromLocalStorage) {
-      const parsedDecks: Record<string, Deck> = JSON.parse(allDecksFromLocalStorage);
-      if (parsedDecks && parsedDecks[deckKey as keyof typeof parsedDecks]) {
-        const currentDeck = parsedDecks[deckKey as keyof typeof parsedDecks];
-        const contentArray = currentDeck.content || [];
-        setDeck({ ...currentDeck, content: contentArray });
-      } else {
-        navigate('/decks');
+    if (decks && decks[deckKey]) {
+      const currentDeck = decks[deckKey];
+      setDeck(currentDeck);
+    } else {
+      if (!deck) {
+        navigate(`/deck-details/${deckKey}`);
       }
     }
-  }, [deckKey, navigate]);
-  
+  }, [deckKey, navigate, decks, deck]);
+
   const menuLinks = deck && deck.name ? [
     {
       to: `/decks`,
@@ -52,17 +50,19 @@ const DeckDetails: React.FC = () => {
         <>
           <p>Description: {deck.description || "No description available"}</p>
           {deck.createdDate && <p>Created on: {deck.createdDate}</p>}
-
+        {console.log(deck)}
           <StyledRow>
             <ButtonLink 
               to={`/learn/${deck.name}/qwerty`} 
               onClick={() => setSelectedLink(`learn/${deck.name}/qwerty`)}
+              disabled={deck.content.length === 0}
             >
               Learn using the QWERTY method
             </ButtonLink>
             <ButtonLink 
               to={`/learn/${deck.name}/flashcard`} 
               onClick={() => setSelectedLink(`learn/${deck.name}/flashcard`)}
+              disabled={deck.content.length === 0}
             >
               Learn using the FLASHCARDS method
             </ButtonLink>

@@ -21,7 +21,7 @@ function Root() {
           <Route path="/" element={<HomePage />} />
           <Route path="/decks" element={<DeckOfFlashcards />} />
           <Route path="/learn" element={<LearnDeck />} />
-          {/* <Route path="/learn/:deckKey" element={<DeckDetails />} /> */}
+          <Route path="/deck-details/:deckKey" element={<DeckDetails />} />
           <Route path="/learn/:deckKey/:method" element={<LearnDeckBySelectedMethod />} />
           <Route path="/create-deck" element={<CreateDeck />} />
           <Route path="/remove-deck" element={<RemoveDeck />} />

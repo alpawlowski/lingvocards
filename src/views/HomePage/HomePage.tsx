@@ -13,7 +13,7 @@ const HomePage = () => {
       {/* <h1>LingvoLernado</h1> */}
       <p>A program for creating and learning flashcards, which is used to support the learning process.</p>
 
-      { decks ? (
+      { decks && Object.keys(decks).length > 0 ? (
         <ButtonLink to='/decks'>
           Go to decks
         </ButtonLink>

@@ -6,6 +6,7 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import { getLanguages } from '../../utils/helpers';
 import DeckData from '../../types/DeckData';
+import { useAppContext } from '../../context/AppContext';
 
 enum CardType {
   Flashcard = "flashcard",
@@ -21,6 +22,8 @@ const defaultLanguage = {
 
 const DeckEditContent: React.FC = () => {
   const { deckKey, contentIndex } = useParams<{ deckKey: string; contentIndex: string }>();
+  const { updateDeckContent, decks } = useAppContext();
+
   const [deck, setDeck] = useState<DeckData | null>(null);
   const [selectedType, setSelectedType] = useState<CardType>(CardType.Flashcard);
   const [frontText, setFrontText] = useState<string>('');
@@ -60,8 +63,8 @@ const DeckEditContent: React.FC = () => {
       const updatedContent = [...deck.content];
       updatedContent[editingContentIndex] = {
         type: { text: selectedType },
-        front: { text: frontText, language: frontLanguage },
-        back: { text: backText, language: backLanguage },
+        front: { text: frontText.trim(), language: frontLanguage },
+        back: { text: backText.trim(), language: backLanguage },
       };
 
       const updatedDeck = {
@@ -69,14 +72,8 @@ const DeckEditContent: React.FC = () => {
         content: updatedContent,
       };
 
-      const allDecksFromLocalStorage = localStorage.getItem('decks');
-      const parsedDecks: Record<string, DeckData> = allDecksFromLocalStorage
-        ? JSON.parse(allDecksFromLocalStorage)
-        : {};
+      updateDeckContent(deckKey, updatedContent);
 
-      parsedDecks[deckKey] = updatedDeck;
-
-      localStorage.setItem('decks', JSON.stringify(parsedDecks));
       setDeck(updatedDeck);
       setFrontText('');
       setBackText('');

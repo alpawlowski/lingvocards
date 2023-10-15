@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
+import { useAppContext } from '../../context/AppContext';
 
 const CreateDeck: React.FC = () => {
   const [newDeckName, setNewDeckName] = useState<string>('');
   const [newDeckDescription, setNewDeckDescription] = useState<string>(''); 
   const [deckError, setDeckError] = useState<string>('');
   const navigate = useNavigate();
+
+  const { updateDecks } = useAppContext(); 
 
   const handleCreateDeck = () => {
     try {
@@ -28,13 +31,15 @@ const CreateDeck: React.FC = () => {
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
       const day = String(currentDate.getDate()).padStart(2, '0');
   
-      decks[newDeckName] = { 
-        name: newDeckName, 
-        description: newDeckDescription, 
+      decks[newDeckName.trim()] = { 
+        name: newDeckName.trim(), 
+        description: newDeckDescription.trim(), 
         createdDate: `${year}-${month}-${day}`,
         content: []
       }; 
       localStorage.setItem('decks', JSON.stringify(decks));
+      
+      updateDecks(decks);
       setNewDeckName('');
       setNewDeckDescription('');
       setDeckError('');
@@ -79,7 +84,7 @@ const CreateDeck: React.FC = () => {
         onChange={(e: ChangeEvent<HTMLInputElement>) => setNewDeckDescription(e.target.value)}
         onKeyPress={handleKeyPress}
       />
-      {deckError && <p style={{ color: 'red' }}>{deckError}</p>}
+      {deckError && <p className='error'>{deckError}</p>}
       <Button onClick={handleCreateDeck}>Create new deck</Button>
     </ColumnTemplate>
   );

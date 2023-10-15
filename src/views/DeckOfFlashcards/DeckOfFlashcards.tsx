@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledLink, StyledGrid } from "./DeckOfFlashcards.styles";
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import { Deck, StyledHeading, StyledDescription, StyledContent, StyledDate } from '../../components/Deck/Deck';
-import { useAppContext } from '../../context/AppContext'; // Dodane importowanie
+import { useAppContext } from '../../context/AppContext';
 
 const DeckOfFlashcards: React.FC = () => {
-  const { decks } = useAppContext(); // Pobieranie `decks` z AppContext
+  const { decks } = useAppContext();
   const navigate = useNavigate();
 
   const handleDeckClick = (deckKey: string) => {
@@ -26,7 +26,7 @@ const DeckOfFlashcards: React.FC = () => {
   
   return (
     <ColumnTemplate title="Decks of flashcards" menu={menuLinks}>
-      { decks ? (
+    { decks && Object.keys(decks).length > 0 ? (
           <>
             <StyledGrid>
               {Object.keys(decks).map(key => {

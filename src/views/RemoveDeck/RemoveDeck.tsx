@@ -4,6 +4,8 @@ import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import { Select } from '../../components/Select/Select';
 import Button from '../../components/Button/Button';
 
+import { useAppContext } from '../../context/AppContext';
+
 interface Deck {
   [key: string]: {
     description?: string;
@@ -15,6 +17,8 @@ const RemoveDeck: React.FC = () => {
   const [decks, setDecks] = useState<Deck>({});
   const navigate = useNavigate();
 
+  const { updateDecks } = useAppContext();
+
   useEffect(() => {
     const storedDecks = localStorage.getItem('decks');
     const savedDecks = storedDecks ? JSON.parse(storedDecks) : {};
@@ -25,6 +29,8 @@ const RemoveDeck: React.FC = () => {
     const updatedDecks = { ...decks };
     delete updatedDecks[selectedDeck];
     localStorage.setItem('decks', JSON.stringify(updatedDecks));
+
+    updateDecks(updatedDecks);
     setDecks(updatedDecks);
     setSelectedDeck('');
     navigate('/decks');

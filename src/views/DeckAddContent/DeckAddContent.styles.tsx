@@ -13,3 +13,15 @@ export const StyledWrapper = styled.div`
 export const StyledSelect = styled(Select)`
   color: ${({ theme }) => theme.colors.gray};
 `;
+
+export const StyledCheckboxLabel = styled.label`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray};
+
+`;
+
+export const StyledCheckboxInput = styled.input.attrs({ type: 'checkbox' })`
+  color: ${({ theme }) => theme.colors.gray};
+  cursor: pointer;
+  margin-right: 1rem;
+`;

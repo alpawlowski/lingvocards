@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TableWrapper, TableContainer, TableHead, TableRow, TableCell, EmptyCell, ButtonsContainer } from './Table.styles';
 import ButtonLink from '../ButtonLink/ButtonLink';
 import Button from '../Button/Button';
+import { useAppContext } from '../../context/AppContext';
 
 interface TableProps {
   data: { [key: string]: { text: string } }[];
@@ -17,19 +18,19 @@ const labelsMap: { [key: string]: string } = {
 
 const Table: React.FC<TableProps> = ({ data, dataToShow, deckName }) => {
   const [tableData, setTableData] = useState(data);
+  const { decks, updateDeckContent } = useAppContext();
 
   const handleDeleteCard = (index: number) => {
     const updatedData = [...tableData];
     updatedData.splice(index, 1);
-
-    const storedDecks = JSON.parse(localStorage.getItem('decks') || '{}');
-    const currentDeckName = Object.keys(storedDecks)[0]; 
-
-    storedDecks[currentDeckName].content = updatedData;
-    localStorage.setItem('decks', JSON.stringify(storedDecks));
-
+  
+    const currentDeckName = Object.keys(decks)[0]; 
+    decks[currentDeckName].content = updatedData;
+    updateDeckContent(currentDeckName, updatedData);
+  
     setTableData(updatedData);
   };
+
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
     e.dataTransfer.setData("index", index.toString());
@@ -52,7 +53,7 @@ const Table: React.FC<TableProps> = ({ data, dataToShow, deckName }) => {
     const currentDeckName = Object.keys(storedDecks)[0]; 
     storedDecks[currentDeckName].content = updatedData;
     localStorage.setItem('decks', JSON.stringify(storedDecks));
-  
+    updateDeckContent(currentDeckName, updatedData);
     setTableData(updatedData);
   };
   

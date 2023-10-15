@@ -1,11 +1,12 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
-import { StyledWrapper, StyledSelect } from './DeckAddContent.styles';
+import { StyledWrapper, StyledSelect, StyledCheckboxLabel, StyledCheckboxInput } from './DeckAddContent.styles';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import { getLanguages } from '../../utils/helpers';
 import DeckData from '../../types/DeckData';
+import { useAppContext } from '../../context/AppContext';
 
 enum CardType {
   Flashcard = "flashcard",
@@ -28,7 +29,9 @@ const DeckAddContent: React.FC = () => {
   const [showLanguageSelectors, setShowLanguageSelectors] = useState<boolean>(false);
   const [frontLanguage, setFrontLanguage] = useState(defaultLanguage);
   const [backLanguage, setBackLanguage] = useState(defaultLanguage);
+  const [deckError, setDeckError] = useState<string>('');
   const navigate = useNavigate();
+  const { updateDecks } = useAppContext();
 
   useEffect(() => {
     const allDecksFromLocalStorage = localStorage.getItem('decks');
@@ -43,44 +46,51 @@ const DeckAddContent: React.FC = () => {
       if (!deck) {
         throw new Error('Deck not found');
       }
-
+  
+      if (!frontText.trim() || !backText.trim()) {
+        throw new Error('Front and back text cannot be empty');
+      }
+  
       const newContent = {
         type: {
           text: selectedType,
         },
         front: {
-          text: frontText,
+          text: frontText.trim(),
           language: frontLanguage,
         },
         back: {
-          text: backText,
+          text: backText.trim(),
           language: backLanguage,
         },
       };      
-
+  
       const updatedContent = [...deck.content, newContent];
-
+  
       const updatedDeck = {
         ...deck,
         content: updatedContent,
       };
-
+  
       const allDecksFromLocalStorage = localStorage.getItem('decks');
       const parsedDecks: Record<string, DeckData> = allDecksFromLocalStorage
         ? JSON.parse(allDecksFromLocalStorage)
         : {};
-
+  
       parsedDecks[deckKey] = updatedDeck;
-
+  
       localStorage.setItem('decks', JSON.stringify(parsedDecks));
       setDeck(updatedDeck);
+      updateDecks(parsedDecks);
       setFrontText('');
       setBackText('');
       setFrontLanguage(defaultLanguage);
       setBackLanguage(defaultLanguage);
+      setDeckError('');
       navigate(`/deck-details/${deck.name}`);
     } catch (error) {
-      console.error(error);
+      const errorMessage = (error as Error).message;
+      setDeckError(errorMessage);
     }
   };
 
@@ -99,6 +109,7 @@ const DeckAddContent: React.FC = () => {
   return (
     <ColumnTemplate title={`Add content to deck - ${deck?.name || ''}`} menu={menuLinks}>
       <StyledWrapper>
+        {deckError && <p className='error'>{deckError}</p>}
         <Input
           type="text"
           maxLength={255}
@@ -143,14 +154,14 @@ const DeckAddContent: React.FC = () => {
             ))}
           </StyledSelect>
         )}
-        <label>
-          Show Language Selectors
-          <input
+        <StyledCheckboxLabel>
+          <StyledCheckboxInput
             type="checkbox"
             checked={showLanguageSelectors}
             onChange={() => setShowLanguageSelectors(!showLanguageSelectors)}
           />
-        </label>
+          Show Language Selectors
+        </StyledCheckboxLabel>
         <Button onClick={handleCreateContent}>Add Content</Button>
       </StyledWrapper>
     </ColumnTemplate>
