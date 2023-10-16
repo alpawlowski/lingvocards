@@ -9,8 +9,7 @@ import DeckData from '../../types/DeckData';
 import { useAppContext } from '../../context/AppContext';
 
 enum CardType {
-  Flashcard = "flashcard",
-  Qwerty = "qwerty",
+  Empty = "",
 }
 
 const defaultLanguage = {
@@ -23,7 +22,7 @@ const defaultLanguage = {
 const DeckAddContent: React.FC = () => {
   const { deckKey } = useParams<{ deckKey: string }>();
   const [deck, setDeck] = useState<DeckData | null>(null);
-  const [selectedType, setSelectedType] = useState<CardType>(CardType.Flashcard);
+  const [selectedType, setSelectedType] = useState<CardType>(CardType.Empty);
   const [frontText, setFrontText] = useState<string>('');
   const [backText, setBackText] = useState<string>('');
   const [showLanguageSelectors, setShowLanguageSelectors] = useState<boolean>(false);
@@ -115,6 +114,7 @@ const DeckAddContent: React.FC = () => {
           maxLength={255}
           placeholder="Front Text"
           value={frontText}
+          autoFocus={true}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setFrontText(e.target.value)}
         />
         {showLanguageSelectors && (

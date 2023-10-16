@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import FlashcardLearningMethod from '../../components/FlashcardLearningMethod/FlashcardLearningMethod';
 import QwertyLearningMethod from '../../components/QwertyLearningMethod/QwertyLearningMethod';
@@ -13,26 +13,29 @@ interface LearnDeckBySelectedMethodProps {
 }
 
 const LearnDeckBySelectedMethod: React.FC<LearnDeckBySelectedMethodProps> = () => {
-
   const { method, deckKey } = useParams<{ method: string, deckKey: string }>();
   const { decks } = useAppContext();
 
   if (!deckKey) {
-    return <p>Brak klucza dla decku</p>;
+    return <Navigate to="/decks" />;
   }
 
   const deck = decks && decks[deckKey] ? decks[deckKey] : null;
 
+  if (!deck || !deck.content || deck.content.length === 0) {
+    return <Navigate to="/learn" />;
+  }
+
   let componentToRender;
-  
+
   if (method === 'flashcard') {
-    componentToRender = deck ? <FlashcardLearningMethod deck={deck} /> : <p>Deck o podanym kluczu nie istnieje.</p>;
+    componentToRender = <FlashcardLearningMethod deck={deck} />;
   } else if (method === 'qwerty') {
-    componentToRender = deck ? <QwertyLearningMethod deck={deck} /> : <p>Deck o podanym kluczu nie istnieje.</p>;
+    componentToRender = <QwertyLearningMethod deck={deck} />;
   } else {
     componentToRender = <p>Nieznana metoda: {method}</p>;
   }
-        
+
   const menuLinks = deck && deck.name ? [
     {
       to: `/deck-details/${deck.name}`,
@@ -49,7 +52,7 @@ const LearnDeckBySelectedMethod: React.FC<LearnDeckBySelectedMethodProps> = () =
     <ColumnTemplate title={`Learning ${deck.name} using the ${method} method`} menu={menuLinks}>
       {componentToRender}
     </ColumnTemplate>
-  )
-}
+  );
+};
 
-export default LearnDeckBySelectedMethod
+export default LearnDeckBySelectedMethod;

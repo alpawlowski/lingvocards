@@ -34,7 +34,6 @@ const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleMenu}) => {
           <MenuItem to="/">Home</MenuItem>
           <MenuItem to={linkToUse}>Learn</MenuItem>
           <MenuItem to="/decks">Decks</MenuItem>
-          <MenuItem to="/tree">Tree</MenuItem>
         </MenuWrapper>
       )}
     </SidebarContainer>

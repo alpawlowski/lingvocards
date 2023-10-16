@@ -73,7 +73,12 @@ const DeckDetails: React.FC = () => {
             deckName={deck.name}
             dataToShow={['type', 'front', 'back']}
           />
-
+          { (deck.content.length === 0) 
+          &&
+            <ButtonLink to={`/${deck.name}/add`}>
+              Add content to deck {deck.name}
+            </ButtonLink>
+          }
         </>
       ) : (
         <p>{title}</p>
