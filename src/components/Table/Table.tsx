@@ -11,7 +11,7 @@ interface TableProps {
 }
 
 const labelsMap: { [key: string]: string } = {
-  type: 'Type',
+  type: 'Level',
   front: 'Front',
   back: 'Back',
 };

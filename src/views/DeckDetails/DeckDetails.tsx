@@ -50,7 +50,6 @@ const DeckDetails: React.FC = () => {
         <>
           <p>Description: {deck.description || "No description available"}</p>
           {deck.createdDate && <p>Created on: {deck.createdDate}</p>}
-        {console.log(deck)}
           <StyledRow>
             <ButtonLink 
               to={`/learn/${deck.name}/qwerty`} 

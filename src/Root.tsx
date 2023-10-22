@@ -4,7 +4,9 @@ import MainTemplate from "./templates/MainTemplate/MainTemplate"
 import HomePage from "./views/HomePage/HomePage"
 import DeckOfFlashcards from './views/DeckOfFlashcards/DeckOfFlashcards';
 import RemoveDeck from './views/RemoveDeck/RemoveDeck';
+import RemoveAllDecks from './views/RemoveAllDecks/RemoveAllDecks';
 import CreateDeck from './views/CreateDeck/CreateDeck';
+import CreateDeckFromCSV from './views/CreateDeckFromCSV/CreateDeckFromCSV';
 import DeckDetails from './views/DeckDetails/DeckDetails';
 import DeckEditContent from './views/DeckEditContent/DeckEditContent';
 import DeckAddContent from './views/DeckAddContent/DeckAddContent';
@@ -24,7 +26,9 @@ function Root() {
           <Route path="/deck-details/:deckKey" element={<DeckDetails />} />
           <Route path="/learn/:deckKey/:method" element={<LearnDeckBySelectedMethod />} />
           <Route path="/create-deck" element={<CreateDeck />} />
+          <Route path="/create-deck/csv" element={<CreateDeckFromCSV />} />
           <Route path="/remove-deck" element={<RemoveDeck />} />
+          <Route path="/remove-deck/all" element={<RemoveAllDecks />} />
           <Route path="/deck-details/:deckKey" element={<DeckDetails />} />
           <Route path="/:deckKey/edit/:contentIndex" element={<DeckEditContent />} />
           <Route path="/:deckKey/add" element={<DeckAddContent />} />

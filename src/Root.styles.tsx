@@ -5,13 +5,10 @@ export const Wrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 100%;
+  max-width: 100%;
   width: 100%;
   max-height: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden auto;
 
-  /* & > h1, h2, p {
-    color: ${({ theme }) => theme.colors.gray};
-  } */
 `;

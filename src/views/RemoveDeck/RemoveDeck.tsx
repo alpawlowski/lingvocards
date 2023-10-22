@@ -40,6 +40,10 @@ const RemoveDeck: React.FC = () => {
     {
       to: `/decks`,
       name: 'Back to decks'
+    },
+    {
+      to: `/remove-deck/all`,
+      name: 'Remove all decks'
     }
   ];
 

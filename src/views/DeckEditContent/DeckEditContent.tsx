@@ -9,8 +9,7 @@ import DeckData from '../../types/DeckData';
 import { useAppContext } from '../../context/AppContext';
 
 enum CardType {
-  Flashcard = "flashcard",
-  Qwerty = "qwerty",
+  Empty = "",
 }
 
 const defaultLanguage = {
@@ -25,7 +24,7 @@ const DeckEditContent: React.FC = () => {
   const { updateDeckContent, decks } = useAppContext();
 
   const [deck, setDeck] = useState<DeckData | null>(null);
-  const [selectedType, setSelectedType] = useState<CardType>(CardType.Flashcard);
+  const [selectedType, setSelectedType] = useState<CardType>(CardType.Empty);
   const [frontText, setFrontText] = useState<string>('');
   const [backText, setBackText] = useState<string>('');
   const [showLanguageSelectors, setShowLanguageSelectors] = useState<boolean>(false);

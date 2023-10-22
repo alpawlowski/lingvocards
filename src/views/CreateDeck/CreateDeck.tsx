@@ -60,6 +60,10 @@ const CreateDeck: React.FC = () => {
     {
       to: `/decks`,
       name: 'Back to decks'
+    },
+    {
+      to: '/create-deck/csv',
+      name: 'Load deck from CSV file'
     }
   ];
 
