@@ -3,14 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import ColumnTemplate from '../../templates/ColumnTemplate/ColumnTemplate';
 import { Select } from '../../components/Select/Select';
 import Button from '../../components/Button/Button';
+import Deck from '../../types/DeckData';
 
 import { useAppContext } from '../../context/AppContext';
-
-interface Deck {
-  [key: string]: {
-    description?: string;
-  };
-}
 
 const RemoveDeck: React.FC = () => {
   const [selectedDeck, setSelectedDeck] = useState<string>('');

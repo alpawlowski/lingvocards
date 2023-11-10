@@ -1,6 +1,6 @@
 import React, { useState  } from 'react';
 import { Wrapper, FlipcardContainer, FlipcardFront, FlipcardBack, FlipcardContent, ButtonsWrapper, StyledButton } from './FlashcardLearningMethod.styles';
-import Deck from '../../types/Deck';
+import Deck from '../../types/DeckData';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { handleTextToSpeech } from '../../utils/helpers';
 

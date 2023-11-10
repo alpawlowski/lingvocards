@@ -6,13 +6,7 @@ import QwertyLearningMethod from '../../components/QwertyLearningMethod/QwertyLe
 import DeckData from '../../types/DeckData';
 import { useAppContext } from '../../context/AppContext';
 
-interface LearnDeckBySelectedMethodProps {
-  deck: DeckData;
-  decks: DeckData;
-  deckKey: string;
-}
-
-const LearnDeckBySelectedMethod: React.FC<LearnDeckBySelectedMethodProps> = () => {
+const LearnDeckBySelectedMethod: React.FC = () => {
   const { method, deckKey } = useParams<{ method: string, deckKey: string }>();
   const { decks } = useAppContext();
 
