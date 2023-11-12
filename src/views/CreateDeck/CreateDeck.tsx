@@ -59,7 +59,8 @@ const CreateDeck: React.FC = () => {
   const menuLinks = [
     {
       to: `/decks`,
-      name: 'Back to decks'
+      name: 'Back to decks',
+      hideOnSmartphone: true
     },
     {
       to: '/create-deck/csv',

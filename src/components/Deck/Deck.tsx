@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Deck = styled.div`
   min-height: 150px;
@@ -9,11 +10,11 @@ export const Deck = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.gray};
   padding: 3rem;
-  cursor: pointer;
 `;
 
-export const StyledHeading = styled.div`
+export const StyledHeading = styled(Link)`
   border-radius: 10px;
+  border: 1px solid transparent;
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -22,6 +23,12 @@ export const StyledHeading = styled.div`
   font-weight: ${({ theme }) => theme.fonts.bold};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.gold};
+  cursor: pointer;
+
+  &:hover {
+    /* border: 1px solid ${({ theme }) => theme.colors.gold}; */
+    background-color: ${({ theme }) => theme.colors.primaryLight};
+  }
 `;
 
 export const StyledDescription = styled.div`
@@ -39,10 +46,26 @@ export const StyledContent = styled.div`
   color: ${({ theme }) => theme.colors.gray};
 `;
 
+export const StyledFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const StyledDate = styled.div`
   display: flex;
   align-items: flex-end;
   font-size: 1.1rem;
   font-weight: ${({ theme }) => theme.fonts.light};
   color: ${({ theme }) => theme.colors.gray};
+`;
+
+export const StyledOptions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & button:last-child {
+    margin-left: 0.7rem;
+  }
 `;

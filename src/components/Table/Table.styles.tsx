@@ -4,12 +4,14 @@ export const TableWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 100vw;
 `;
 
 export const TableContainer = styled.table`
   border-collapse: collapse;
+  min-width: 100%;
+  max-width: 100vw;
   width: 100%;
-  max-width: 100%;
   margin: 20px;
   color: ${({ theme }) => theme.colors.gray};
 `;
@@ -51,6 +53,13 @@ export const TableCell = styled.td<{ width?: string; textAlign?: string }>`
   &:last-child button {
     margin: 1rem 0;
     margin-right: 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 1rem;
+    font-size: 1rem;
+    max-width: 110px;
+    overflow-x: scroll;
   }
 `;
 

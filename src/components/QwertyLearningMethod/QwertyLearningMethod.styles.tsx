@@ -32,6 +32,11 @@ export const QwertyContainer = styled.div<QwertyProps>`
   color: ${({ theme }) => theme.colors.gold};
   background-color: ${({theme}) => theme.colors.primaryLight};
   border-radius: 1.5rem;  
+
+  @media screen and (max-width: 768px) {
+    max-width: 100vw;
+    width: 100%;
+  }
 `;
 
 export const QwertyContent = styled.div`
@@ -67,6 +72,11 @@ export const StyledInput = styled(Input)`
   &.wrong {
     background: ${({ theme }) => `rgba(${theme.colors.badRGB}, 0.1)`};
     border: 1px solid ${({theme }) => theme.colors.bad};
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 90%;
+    width: 80%;
   }
 `;
 

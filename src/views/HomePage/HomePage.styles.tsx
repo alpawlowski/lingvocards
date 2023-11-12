@@ -20,4 +20,9 @@ export const Wrapper = styled.div`
   & a button {
     margin: 4rem;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+    height: calc(100vh - 60px);
+  }
 `;

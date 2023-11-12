@@ -16,4 +16,18 @@ export const Wrapper = styled.div<MainTemplateProps>`
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.primary};
   transition: grid-template-columns 0.3s ease-in-out;
+
+  @media screen and (max-width: 768px) {
+    min-height: ${({ isOpen }) => (isOpen ? '100vh' : '100%')};
+    max-height: ${({ isOpen }) => (isOpen ? '100vh' : '100%')};
+    height: ${({ isOpen }) => (isOpen ? '100vh' : '100%')};
+    grid-template-columns: 1fr;
+    grid-template-rows: ${({ isOpen }) => (isOpen ? '260px' : '60px')} 1fr;
+    text-align: center;
+
+    & section {
+      opacity: ${({ isOpen }) => (isOpen ? 0.5 : 1)};
+      filter: ${({ isOpen }) => (isOpen ? 'blur(3px)' : 'blur(0)')};
+    }
+  }
 `;

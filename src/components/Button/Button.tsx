@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 
 interface ButtonProps {
   secondary?: boolean;
+  icon?: boolean;
+  hideOnSmartphone?: boolean;
 }
 
 const Button = styled.button<ButtonProps>`
@@ -46,6 +48,10 @@ const Button = styled.button<ButtonProps>`
       stroke: ${({theme}) => theme.colors.secondary};
     }
   }
+
+  @media screen and (max-width: 768px) {
+    margin: 0.7rem 1rem;
+  }
   
   ${({ secondary }) =>
     secondary &&
@@ -63,7 +69,32 @@ const Button = styled.button<ButtonProps>`
         color: ${({ theme }) => theme.colors.gold};
         border: 2px solid ${({ theme }) => theme.colors.gold};
       }
-    `}
+  `}
+
+  ${({ icon }) =>
+    icon &&
+    css`
+      display: none;
+
+      display: flex;
+      height: 40px;
+      min-width: 40px;
+      width: auto;
+      padding: 0;
+      margin: 0;
+      border: none;
+      @media screen and (max-width: 768px) {
+      }
+  `}
+
+  ${({ hideOnSmartphone }) =>
+    hideOnSmartphone &&
+    css`
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
+  `}
+
 `;
 
 export default Button;

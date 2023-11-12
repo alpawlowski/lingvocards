@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.div`
   /* display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -12,6 +12,10 @@ export const Wrapper = styled.section`
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+
+  @media screen and (max-width: 768px) {
+    grid-template-rows: 60px 1fr;
+  }
 `;
 
 export const InnerWrapper = styled.main`
@@ -25,6 +29,10 @@ export const InnerWrapper = styled.main`
   max-width: 100%;
   padding: 5rem 5rem 10rem;
   overflow: auto;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem;
+  }
 `;
 
 export const Header = styled.header`
@@ -49,4 +57,8 @@ export const BottomMenu = styled.footer`
   padding: 0 3.5rem;
   color: ${({ theme }) => theme.colors.gray};
   background-color: ${({ theme }) => theme.colors.secondary};
+
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+  }
 `;

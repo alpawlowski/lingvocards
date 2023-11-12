@@ -29,7 +29,7 @@ export const StyledLink = styled(NavLink)`
   border: 2px solid ${({ theme }) => theme.colors.gold};
   border-radius: 50px;
   background: ${({ theme }) => theme.colors.transparent};
-  
+
   &:hover {
     color: ${({ theme }) => theme.colors.gray};
     border: 2px solid ${({ theme }) => theme.colors.gray};
@@ -46,8 +46,13 @@ export const StyledGrid = styled.div`
 `;
 
 export const StyledRow = styled.div`
-  display: flex;
   width: 100%;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;

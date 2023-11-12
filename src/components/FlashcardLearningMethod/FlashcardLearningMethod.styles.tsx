@@ -32,6 +32,12 @@ export const FlipcardContainer = styled.div<FlipcardProps>`
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
   transform: ${({ isFlipped }) => (isFlipped ? 'rotateY(180deg)' : 'rotateY(0)')};
   margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    max-width: 100vw;
+    width: 100%;
+  }
+
 `;
 
 const CommonFlipcardStyles = css`

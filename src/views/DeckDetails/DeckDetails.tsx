@@ -29,7 +29,8 @@ const DeckDetails: React.FC = () => {
   const menuLinks = deck && deck.name ? [
     {
       to: `/decks`,
-      name: 'Back to decks'
+      name: 'Back to decks',
+      hideOnSmartphone: true
     },
     {
       to: `/${deck.name}/add`,

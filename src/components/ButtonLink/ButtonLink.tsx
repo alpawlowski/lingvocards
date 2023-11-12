@@ -5,6 +5,8 @@ import Button from '../Button/Button';
 
 interface ButtonProps {
   secondary?: boolean;
+  icon?: boolean;
+  hideOnSmartphone?: boolean;
   to: string;
   children: React.ReactNode;
   onClick?: () => void;
@@ -20,7 +22,7 @@ const ButtonDisabled = styled(Button)`
   }
 `;
 
-const ButtonLink: React.FC<ButtonProps> = ({ secondary, to, children, onClick, disabled }) => {
+const ButtonLink: React.FC<ButtonProps> = ({ secondary, to, children, onClick, disabled, icon, hideOnSmartphone }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -29,7 +31,7 @@ const ButtonLink: React.FC<ButtonProps> = ({ secondary, to, children, onClick, d
 
   if (disabled) {
     return (
-      <ButtonDisabled secondary={secondary} onClick={handleClick}>
+      <ButtonDisabled secondary={secondary} icon={icon} hideOnSmartphone={hideOnSmartphone} onClick={handleClick}>
         {children}
       </ButtonDisabled>
     );
@@ -37,7 +39,7 @@ const ButtonLink: React.FC<ButtonProps> = ({ secondary, to, children, onClick, d
 
   return (
     <Link to={to}>
-      <Button secondary={secondary} onClick={handleClick}>
+      <Button secondary={secondary} icon={icon} hideOnSmartphone={hideOnSmartphone} onClick={handleClick}>
         {children}
       </Button>
     </Link>

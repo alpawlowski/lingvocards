@@ -13,9 +13,13 @@ export const SidebarContainer = styled.aside<SidebarProps>`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   padding: 10px;
-  border-radius: 0 .75rem .75rem 0;
   overflow-y: auto;
   transition: width 0.3s ease-in-out;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: fit-content;
+  }
 `;
 
 export const ToggleMenuWrapper = styled.div<SidebarProps>`
@@ -23,7 +27,6 @@ export const ToggleMenuWrapper = styled.div<SidebarProps>`
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-
 `;
 
 export const ToggleMenuButton = styled.button<SidebarProps>`
@@ -40,7 +43,7 @@ export const ToggleMenuButton = styled.button<SidebarProps>`
   padding: .5rem;
   border: 1px solid ${({ theme }) => theme.colors.primaryLight};
   border-radius: .75rem;
-  `;
+`;
 
 export const MenuWrapper = styled.nav`
   margin-top: 2rem;
@@ -49,6 +52,10 @@ export const MenuWrapper = styled.nav`
   cursor: pointer;
   border-radius: .75rem;
   transition: background-color 0.3s;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
 export const MenuItem = styled(NavLink)`

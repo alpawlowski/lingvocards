@@ -25,7 +25,7 @@ const ColumnTemplate: React.FC<ColumnTemplateProps> = ({ title, menu, children }
       </InnerWrapper>
       <BottomMenu>
         {menu.map((link: menuProps) => (
-          <ButtonLink secondary to={link.to} key={link.to}>
+          <ButtonLink secondary hideOnSmartphone={link.hideOnSmartphone} to={link.to} key={link.to}>
             {link.name}
           </ButtonLink>
         ))}
