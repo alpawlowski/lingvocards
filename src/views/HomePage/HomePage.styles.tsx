@@ -23,6 +23,6 @@ export const Wrapper = styled.div`
 
   @media screen and (max-width: 768px) {
     padding: 1rem;
-    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
   }
 `;

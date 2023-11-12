@@ -7,14 +7,16 @@ export const Wrapper = styled.div`
   align-items: center; */
   display: grid;
   grid-template-rows: 60px 1fr 60px;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   max-width: 100%;
   overflow: hidden;
 
   @media screen and (max-width: 768px) {
     grid-template-rows: 60px 1fr;
+    min-height: calc(100dvh - 60px);
+    height: calc(100dvh - 60px);
   }
 `;
 
@@ -46,6 +48,10 @@ export const Header = styled.header`
 
 export const HeaderText = styled.h2`
   color: ${({ theme }) => theme.colors.gray};
+  
+  @media screen and (max-width: 768px) {
+    font-size: 1.8rem;
+  }
 `;
 
 export const BottomMenu = styled.footer`

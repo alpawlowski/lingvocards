@@ -7,8 +7,8 @@ export const Wrapper = styled.section`
   align-items: center; */
   display: grid;
   grid-template-rows: 60px 1fr 60px;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   max-width: 100%;
   overflow: hidden;
