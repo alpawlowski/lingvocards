@@ -40,12 +40,19 @@ export const StyledLink = styled(NavLink)`
 export const StyledGrid = styled.div`
   display: grid;
   grid-gap: 5rem;
-  grid-template-columns: repeat(3, 1fr);
   width: 100%;
   align-items: center;
   
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 810px) {
     grid-gap: 2rem;
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media only screen and (min-width: 811px) and (max-width: 1080px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (min-width: 1081px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
