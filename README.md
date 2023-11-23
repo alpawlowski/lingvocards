@@ -1,3 +1,6 @@
+![lingvocards](https://github.com/alpawlowski/lingvocards/assets/69993066/b35143b3-6629-4422-b0b1-0dc07871edb7)
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
