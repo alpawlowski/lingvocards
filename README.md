@@ -1,5 +1,4 @@
-![lingvocards](https://github.com/alpawlowski/lingvocards/assets/69993066/b35143b3-6629-4422-b0b1-0dc07871edb7)
-
+![lingvocards](https://github.com/alpawlowski/lingvocards/assets/69993066/e92194c3-96f1-4402-b6fe-bde70d76f750)
 
 # React + TypeScript + Vite
 
