@@ -1,5 +1,5 @@
 import React from 'react';
-import { SidebarContainer, ToggleMenuWrapper, ToggleMenuButton, MenuWrapper, MenuItem } from './Sidebar.styles';
+import { SidebarContainer, ToggleMenuWrapper, ToggleMenuButton, MenuWrapper, MenuItem, MenuTopItems, MenuBottomItems } from './Sidebar.styles';
 
 import { useAppContext } from '../../context/AppContext';
 
@@ -31,9 +31,14 @@ const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleMenu}) => {
       </ToggleMenuWrapper>
       {isOpen && (
         <MenuWrapper>
-          <MenuItem to="/">Home</MenuItem>
-          <MenuItem to={linkToUse}>Learn</MenuItem>
-          <MenuItem to="/decks">Decks</MenuItem>
+          <MenuTopItems>
+            <MenuItem to="/">Home</MenuItem>
+            <MenuItem to={linkToUse}>Learn</MenuItem>
+            <MenuItem to="/decks">Decks</MenuItem>
+          </MenuTopItems>
+          <MenuBottomItems>
+            <MenuItem to="/settings">Settings</MenuItem>
+          </MenuBottomItems>
         </MenuWrapper>
       )}
     </SidebarContainer>

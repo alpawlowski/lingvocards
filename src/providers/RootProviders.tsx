@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '../context/ThemeContext';
 import { GlobalStyles } from '../assets/styles/GlobalStyles';
-import { theme } from '../assets/styles/theme';
 import { AppProvider } from '../context/AppContext';
 
 interface RootProvidersProps {
@@ -10,9 +9,10 @@ interface RootProvidersProps {
 }
 
 const RootProviders: React.FC<RootProvidersProps> = ({ children }) => {
+
   return (
     <Router>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <GlobalStyles />
         <AppProvider>
           {children}

@@ -6,7 +6,8 @@ interface SidebarProps {
 }
 
 export const SidebarContainer = styled.aside<SidebarProps>`
-  display: block;
+  display: grid;
+  grid-template-rows: auto 1fr;
   visibility: visible;
   overflow: hidden;
   width: ${({ isOpen }) => (isOpen ? '260px' : '60px')};
@@ -30,6 +31,7 @@ export const ToggleMenuWrapper = styled.div<SidebarProps>`
 `;
 
 export const ToggleMenuButton = styled.button<SidebarProps>`
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -37,7 +39,7 @@ export const ToggleMenuButton = styled.button<SidebarProps>`
   background-color: transparent;
   border: none;
   color: #fff;
-  fill: ${({ theme }) => theme.colors.white};
+  fill: ${({ theme }) => theme.colors.elements};
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.primary};
   padding: .5rem;
@@ -46,23 +48,34 @@ export const ToggleMenuButton = styled.button<SidebarProps>`
 `;
 
 export const MenuWrapper = styled.nav`
-  margin-top: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 10px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.elements};
   cursor: pointer;
   border-radius: .75rem;
   transition: background-color 0.3s;
+`;
 
-  @media screen and (max-width: 768px) {
-    margin-top: 0;
-  }
+export const MenuTopItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+export const MenuBottomItems = styled.div`
+  display: flex;
+  margin-top: auto;
 `;
 
 export const MenuItem = styled(NavLink)`
-  display: block;
+  display: flex;
+  width: 100%;
   margin-top: 2rem;
   padding: 10px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.elements};
   cursor: pointer;
   border-radius: .75rem;
   transition: background-color 0.3s;

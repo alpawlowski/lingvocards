@@ -13,6 +13,7 @@ import DeckAddContent from './views/DeckAddContent/DeckAddContent';
 import TreeLocalStorage from './views/TreeLocalStorage/TreeLocalStorage';
 import LearnDeck from './views/LearnDeck/LearnDeck';
 import LearnDeckBySelectedMethod from './views/LearnDeckBySelectedMethod/LearnDeckBySelectedMethod';
+import Settings from './views/Settings/Settings';
 
 function Root() {
 
@@ -32,6 +33,7 @@ function Root() {
           <Route path="/deck-details/:deckKey" element={<DeckDetails />} />
           <Route path="/:deckKey/edit/:contentIndex" element={<DeckEditContent />} />
           <Route path="/:deckKey/add" element={<DeckAddContent />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/tree" element={<TreeLocalStorage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
