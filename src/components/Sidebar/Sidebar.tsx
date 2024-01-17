@@ -37,6 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleMenu}) => {
             <MenuItem to="/decks">Decks</MenuItem>
           </MenuTopItems>
           <MenuBottomItems>
+            <MenuItem to="/progress">Progress</MenuItem>
             <MenuItem to="/settings">Settings</MenuItem>
           </MenuBottomItems>
         </MenuWrapper>

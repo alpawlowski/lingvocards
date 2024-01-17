@@ -63,10 +63,11 @@ export const MenuTopItems = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-`;
+  `;
 
 export const MenuBottomItems = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: auto;
 `;
 
